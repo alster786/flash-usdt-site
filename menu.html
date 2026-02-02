@@ -1,28 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu</title>
-<style>
-body{font-family:Arial;background:#f4f6f8;}
-.container{max-width:360px;margin:90px auto;background:#fff;padding:20px;border-radius:8px;text-align:center;}
-button{width:100%;padding:12px;margin:10px 0;border:none;border-radius:5px;background:#1e88e5;color:#fff;font-size:15px;}
-.note{font-size:12px;color:#c00;margin-bottom:10px;}
-</style>
-</head>
-<body>
+function signup(){
+  let email = document.getElementById("email").value;
+  let pass  = document.getElementById("password").value;
 
-<div class="container">
-  <h2>Menu</h2>
+  if(email === "" || pass === ""){
+    alert("Fill all fields");
+    return;
+  }
 
-  <p class="note">
-  </p>
+  // save user
+  localStorage.setItem("user_email", email);
+  localStorage.setItem("user_pass", pass);
 
-  <button onclick="location.href='balance.html'">Flash USDT Balance</button>
-  <button onclick="location.href='deposit.html'">Deposit USDT</button>
-  <button onclick="location.href='withdraw.html'">Withdraw Flash USDT</button>
-</div>
+  alert("Signup successful. Please login.");
+  showLogin();
+}
 
-</body>
-</html>
+function showLogin(){
+  document.getElementById("title").innerText = "Login";
+  document.getElementById("btn").innerText = "Login";
+  document.getElementById("btn").onclick = login;
+}
+
+function login(){
+  let email = document.getElementById("email").value;
+  let pass  = document.getElementById("password").value;
+
+  let savedEmail = localStorage.getItem("user_email");
+  let savedPass  = localStorage.getItem("user_pass");
+
+  if(email === savedEmail && pass === savedPass){
+    // ✅ LOGIN FLAG
+    localStorage.setItem("loggedIn", "yes");
+
+    // ✅ REDIRECT TO MENU
+    window.location.href = "menu.html";
+  }else{
+    alert("Invalid login details");
+  }
+}
